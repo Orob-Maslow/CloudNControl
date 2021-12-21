@@ -1,7 +1,7 @@
 import chainedFunction from 'chained-function';
 import ensureArray from 'ensure-array';
 import includes from 'lodash/includes';
-import noop from 'lodash/noop';
+//import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import Dropdown, { MenuItem } from 'app/components/Dropdown';
@@ -14,7 +14,7 @@ import AxisSubscript from './components/AxisSubscript';
 import Panel from './components/Panel';
 import PositionLabel from './components/PositionLabel';
 import PositionInput from './components/PositionInput';
-import Taskbar from './components/Taskbar';
+//import Taskbar from './components/Taskbar';
 import TaskbarButton from './components/TaskbarButton';
 import {
     AXIS_E,
@@ -28,11 +28,11 @@ import {
     METRIC_UNITS
 } from '../../constants';
 import styles from './index.styl';
-import iconMinus from './images/minus.svg';
-import iconPlus from './images/plus.svg';
-import iconHome from './images/home.svg';
-import iconPin from './images/pin.svg';
-import iconPencil from './images/pencil.svg';
+//import iconMinus from './images/minus.svg';
+//import iconPlus from './images/plus.svg';
+//import iconHome from './images/home.svg';
+//import iconPin from './images/pin.svg';
+//import iconPencil from './images/pencil.svg';
 
 class DisplayPanel extends PureComponent {
     static propTypes = {
@@ -122,17 +122,17 @@ class DisplayPanel extends PureComponent {
                     <MenuItem header>{i18n._('Work Coordinate System (G59)')}</MenuItem>
                     }
                     <MenuItem
-                        eventKey="G0 X0 Y0 Z0"
+                        eventKey="G0 X0 Y0"
                         disabled={!canClick}
                     >
-                        {i18n._('Go To Work Zero (G0 X0 Y0 Z0)')}
+                        {i18n._('Go To Work Zero (G0 X0 Y0)')}
                     </MenuItem>
                     {wcs === 'G54' && (
                         <MenuItem
-                            eventKey="G10 L20 P1 X0 Y0 Z0"
+                            eventKey="G92 X0 Y0"
                             disabled={!canClick}
                         >
-                            {i18n._('Zero Out Work Offsets (G10 L20 P1 X0 Y0 Z0)')}
+                            {i18n._('Create Work Offset')}
                         </MenuItem>
                     )}
                     {wcs === 'G55' && (
@@ -169,14 +169,14 @@ class DisplayPanel extends PureComponent {
                     )}
                     {wcs === 'G59' && (
                         <MenuItem
-                            eventKey="G10 L20 P6 X0 Y0 Z0"
+                            eventKey="G92 X0 Y0"
                             disabled={!canClick}
                         >
-                            {i18n._('Zero Out Work Offsets (G10 L20 P6 X0 Y0 Z0)')}
+                            {i18n._('Create Work Offset')}
                         </MenuItem>
                     )}
                     <MenuItem divider />
-                    <MenuItem header>{i18n._('Temporary Offsets (G92)')}</MenuItem>
+                    {/*<MenuItem header>{i18n._('Temporary Offsets (G92)')}</MenuItem>
                     <MenuItem
                         eventKey="G92 X0 Y0 Z0"
                         disabled={!canClick}
@@ -187,28 +187,28 @@ class DisplayPanel extends PureComponent {
                         eventKey="G92.1 X0 Y0 Z0"
                         disabled={!canClick}
                     >
-                        {i18n._('Un-Zero Out Temporary Offsets (G92.1 X0 Y0 Z0)')}
+                        {i18n._('Clear Work Offsets')}
                     </MenuItem>
-                    <MenuItem divider />
+                    <MenuItem divider />*/}
                     <MenuItem header>{i18n._('Machine Coordinate System (G53)')}</MenuItem>
                     <MenuItem
-                        eventKey="G53 G0 X0 Y0 Z0"
+                        eventKey="G53 G0 X0 Y0"
                         disabled={!canClick}
                     >
-                        {i18n._('Go To Machine Zero (G53 G0 X0 Y0 Z0)')}
+                        {i18n._('Go To Machine Zero (G53 G0 X0 Y0)')}
                     </MenuItem>
-                    <MenuItem
+                    {/*<MenuItem
                         eventKey="G28.3 X0 Y0 Z0"
                         disabled={!canClick}
                     >
                         {i18n._('Set Machine Zero (G28.3 X0 Y0 Z0)')}
-                    </MenuItem>
-                    <MenuItem
+                    </MenuItem>*/}
+                    {/*<MenuItem
                         eventKey="G28.2 X0 Y0 Z0"
                         disabled={!canClick}
                     >
                         {i18n._('Homing Sequence (G28.2 X0 Y0 Z0)')}
-                    </MenuItem>
+                    </MenuItem>*/}
                 </Dropdown.Menu>
             </Dropdown>
         );
@@ -1015,7 +1015,7 @@ class DisplayPanel extends PureComponent {
     renderAxis = (axis) => {
         const { canClick, units, machinePosition, workPosition, jog } = this.props;
         const { actions } = this.props;
-        const wcs = actions.getWorkCoordinateSystem();
+        //const wcs = actions.getWorkCoordinateSystem();
         const lengthUnits = (units === METRIC_UNITS) ? i18n._('mm') : i18n._('in');
         const degreeUnits = i18n._('deg');
         const axisSettings = this.workspace.axes[axis];
@@ -1023,7 +1023,7 @@ class DisplayPanel extends PureComponent {
         const mpos = !axisSettings ? unknown : axisSettings.getAxisValueString(machinePosition[axis]);
         const wpos = !axisSettings ? unknown : axisSettings.getAxisValueString(workPosition[axis]);
         const axisLabel = axis.toUpperCase();
-        const axisKey = axis.toLowerCase();
+        //const axisKey = axis.toLowerCase();
         const displayUnits = {
             [AXIS_E]: lengthUnits,
             [AXIS_X]: lengthUnits,
@@ -1033,7 +1033,7 @@ class DisplayPanel extends PureComponent {
             [AXIS_B]: degreeUnits,
             [AXIS_C]: degreeUnits
         }[axis] || '';
-        const renderActionDropdown = {
+        /*const renderActionDropdown = {
             [AXIS_E]: this.renderActionDropdownForAxisE,
             [AXIS_X]: this.renderActionDropdownForAxisX,
             [AXIS_Y]: this.renderActionDropdownForAxisY,
@@ -1041,13 +1041,13 @@ class DisplayPanel extends PureComponent {
             [AXIS_A]: this.renderActionDropdownForAxisA,
             [AXIS_B]: this.renderActionDropdownForAxisB,
             [AXIS_C]: this.renderActionDropdownForAxisC
-        }[axis] || noop;
-        const canZeroOutMachine = canClick;
-        const canHomeMachine = canClick;
-        const canMoveBackward = canClick;
-        const canMoveForward = canClick;
-        const canZeroOutWorkOffsets = canClick;
-        const canModifyWorkPosition = canClick && !this.state.positionInput[axis];
+        }[axis] || noop;*/
+        //const canZeroOutMachine = canClick;
+        //const canHomeMachine = canClick;
+        //const canMoveBackward = canClick;
+        //const canMoveForward = canClick;
+        //const canZeroOutWorkOffsets = canClick;
+        //const canModifyWorkPosition = canClick && !this.state.positionInput[axis];
         const showPositionInput = canClick && this.state.positionInput[axis];
         const highlightAxis = canClick && (jog.keypad || jog.axis === axis);
 
@@ -1061,7 +1061,7 @@ class DisplayPanel extends PureComponent {
                 </td>
                 <td className={styles.machinePosition}>
                     <PositionLabel value={mpos} />
-                    <Taskbar style={{ minHeight: '27px' }}>
+                    {/*<Taskbar style={{ minHeight: '27px' }}>
                         <div className="clearfix">
                             <div className="pull-right">
                                 {this.renderTaskbarFeature(`mpos_set_home_${axisKey}`, `Set machine's ${axisLabel} position to zero`, iconPin, !canZeroOutMachine, () => {
@@ -1072,7 +1072,7 @@ class DisplayPanel extends PureComponent {
                                 })}
                             </div>
                         </div>
-                    </Taskbar>
+                            </Taskbar>*/}
                 </td>
                 <td className={styles.workPosition}>
                     {showPositionInput && (
@@ -1090,7 +1090,7 @@ class DisplayPanel extends PureComponent {
                     {!showPositionInput &&
                     <PositionLabel value={wpos} />
                     }
-                    <Taskbar style={{ minHeight: '27px' }}>
+                    {/*<Taskbar style={{ minHeight: '27px' }}>
                         <div className="clearfix">
                             <div className="pull-right">
                                 <TaskbarButton
@@ -1144,18 +1144,18 @@ class DisplayPanel extends PureComponent {
                                 </TaskbarButton>
                             </div>
                         </div>
-                    </Taskbar>
+                            </Taskbar>*/}
                 </td>
-                <td className={styles.action}>
+                {/*<td className={styles.action}>
                     {renderActionDropdown({ wcs })}
-                </td>
+                        </td>*/}
             </tr>
         );
     };
 
     render() {
         const { axes, machinePosition, workPosition } = this.props;
-        const wcs = this.props.actions.getWorkCoordinateSystem();
+        //const wcs = this.props.actions.getWorkCoordinateSystem();
         const hasAxisE = (machinePosition.e !== undefined && workPosition.e !== undefined);
         const hasAxisX = includes(axes, AXIS_X);
         const hasAxisY = includes(axes, AXIS_Y);
@@ -1166,15 +1166,15 @@ class DisplayPanel extends PureComponent {
 
         return (
             <Panel className={styles.displayPanel}>
-                <table className="table-bordered">
+                <table className="table-bordered machine-position-table">
                     <thead>
                         <tr>
-                            <th title={i18n._('Axis')}>{i18n._('Axis')}</th>
-                            <th title={i18n._('Machine Position')}>{i18n._('Machine Position')}</th>
-                            <th title={i18n._('Work Position')}>{i18n._('Work Position')}</th>
-                            <th className={styles.action}>
+                            <th style={{ textAlign: 'center' }} title={i18n._('Axis')}>{i18n._('Axis')}</th>
+                            <th style={{ textAlign: 'center' }} title={i18n._('Machine Position')}>{i18n._('Machine Position')}</th>
+                            <th style={{ textAlign: 'center' }} title={i18n._('Work Position')}>{i18n._('Work Position')}</th>
+                            {/*<th className={styles.action}>
                                 {this.renderActionDropdown({ wcs })}
-                            </th>
+        </th>*/}
                         </tr>
                     </thead>
                     <tbody>

@@ -34,7 +34,8 @@ class Keypad extends PureComponent {
         units: PropTypes.oneOf([IMPERIAL_UNITS, METRIC_UNITS]),
         axes: PropTypes.array,
         jog: PropTypes.object,
-        actions: PropTypes.object
+        actions: PropTypes.object,
+        workPosition: PropTypes.object
     };
 
     get workspace() {
@@ -576,6 +577,60 @@ class Keypad extends PureComponent {
                             </div>
                         </div>
                     </div>
+                </div>
+                {// work offset buttons
+                }
+                <div className="row no-gutters">
+                    <Button
+                        btnStyle="flat"
+                        className={cx(styles.btnKeypad, styles['btn-setOffset'])}
+                        onClick={() => {
+                            this.handleSelect('G92 Z0');
+                        }}
+                        disabled={!canClickXY}
+                        title={i18n._('Sets current position of the z-axis to zero, so project commands will be relative to that point.')}
+                    >
+                        <KeypadText>Set Z-axis Zero</KeypadText>
+                    </Button>
+                </div>
+                <div className="row no-gutters">
+                    <Button
+                        btnStyle="flat"
+                        className={cx(styles.btnKeypad, styles['btn-setOffset'])}
+                        onClick={() => {
+                            this.handleSelect('G92 X0 Y0');
+                        }}
+                        disabled={!canClickXY}
+                        title={i18n._('Sets the current position to temporary XY zero so that project commands will be relative to this position.')}
+                    >
+                        <KeypadText>Set Work Home</KeypadText>
+                    </Button>
+                </div>
+                <div className="row no-gutters">
+                    <Button
+                        btnStyle="flat"
+                        className={cx(styles.btnKeypad, styles['btn-setOffset'])}
+                        onClick={() => {
+                            this.handleSelect('G92.1');
+                        }}
+                        disabled={!canClickXY}
+                        title={i18n._('Clears any existing Work Home and all commands are relative to Machine Home again.')}
+                    >
+                        <KeypadText>Clear Work Home</KeypadText>
+                    </Button>
+                </div>
+                <div className="row no-gutters">
+                    <Button
+                        btnStyle="flat"
+                        className={cx(styles.btnKeypad, styles['btn-setOffset'])}
+                        onClick={() => {
+                            this.handleSelect('G53 G0 X0 Y0');
+                        }}
+                        disabled={!canClickXY}
+                        title={i18n._('Sends the sled back to the Home position that was set during calibration.')}
+                    >
+                        <KeypadText>Go To Machine Home</KeypadText>
+                    </Button>
                 </div>
             </div>
         );
